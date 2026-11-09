@@ -1,6 +1,6 @@
 <div align="center">
 
-# OwlSnipe
+# OwlSwipe
 
 Brief project tagline.
 
