@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Owlswipe</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Owlswipe"><meta data-rh="true" name="description" content="Project documentation"><meta data-rh="true" property="og:description" content="Project documentation"><link data-rh="true" rel="icon" href="/owlswipe/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="en"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="x-default"><script data-rh="true">function insertBanner(){var n=document.createElement("div");n.id="__docusaurus-base-url-issue-banner-container";n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/owlswipe/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n',document.body.prepend(n);var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}document.addEventListener("DOMContentLoaded",function(){void 0===window.docusaurus&&insertBanner()})</script><link rel="stylesheet" href="/owlswipe/assets/css/styles.79f7b21c.css">
-<script src="/owlswipe/assets/js/runtime~main.c33a1f0b.js" defer="defer"></script>
-<script src="/owlswipe/assets/js/main.2af5b88d.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/runtime~main.4e3f408b.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/main.fbc48582.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -17,7 +17,7 @@
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>Most meal plans leave students with swipes they never use, while other students run out before the semester ends. OwlSwipe connects the two. Students with extra swipes list them for sale, and students who need a meal buy one for less than paying at the door. Sellers earn back part of what they spent on their plan, and buyers eat for less.</p>
-<p>Prices are set by students. The swipe itself happens in person: buyer and seller meet at the dining hall entrance, and the seller swipes the buyer in.</p>
+<p>Prices are set by students. The swipe itself happens in person: Seller uses a meal swipe through GrubHub, then the buyer uses the information provided by the seller to pick up the order.</p>
 <p><strong>Status:</strong> In planning / early design. This README describes what we plan to build.</p>
 <h2 id="who-its-for">Who it&#x27;s for</h2>
 <ul>
@@ -26,12 +26,60 @@
 </ul>
 <p>OwlSwipe is for verified students only. Every account is tied to a school email address.</p>
 <h2 id="main-features">Main features</h2>
-<table><thead><tr><th>Feature</th><th>What it does</th></tr></thead><tbody><tr><td><strong>School email login</strong></td><td>Students sign in with their school email and confirm it with a one-time code. Non-school addresses are rejected. No passwords.</td></tr><tr><td><strong>Marketplace</strong></td><td>Browse swipes for sale, filtered by dining hall, time and price. Sellers create listings saying where, when and for how much.</td></tr><tr><td><strong>Buying a swipe</strong></td><td>Pick a listing, pay, and get matched with the seller to meet at the dining hall. Payment is released once the buyer confirms they got in.</td></tr><tr><td><strong>Recent orders</strong></td><td>A history of swipes you&#x27;ve bought, sold and listed, with each one&#x27;s status (e.g. waiting for buyer, completed).</td></tr><tr><td><strong>Balance</strong></td><td>Your earnings from sales, pending payouts and available funds. Cash out or add funds to buy swipes.</td></tr></tbody></table>
+<table><thead><tr><th>Feature</th><th>What it does</th></tr></thead><tbody><tr><td><strong>School email login</strong></td><td>Students sign in with their school email and confirm it with a one-time code. Non-school addresses are rejected. No passwords.</td></tr><tr><td><strong>Marketplace</strong></td><td>Browse swipes for sale, filtered by location, time and price. Sellers create listings saying where, when and for how much.</td></tr><tr><td><strong>Buying a swipe</strong></td><td>Pick a listing, pay, and get matched with the seller which will create the order for the buyer. Payment is released once the buyer confirms they got in.</td></tr><tr><td><strong>Recent orders</strong></td><td>A history of swipes you&#x27;ve bought, sold and listed, with each one&#x27;s status (e.g. waiting for buyer, completed).</td></tr><tr><td><strong>Balance</strong></td><td>Your earnings from sales, pending payouts and available funds. Cash out or add funds to buy swipes.</td></tr></tbody></table>
 <h2 id="how-it-works">How it works</h2>
 <ol>
-<li><strong>List:</strong> A seller posts their extra swipes with a dining hall, available times and a price.</li>
+<li><strong>List:</strong> A seller posts their extra swipes with a GrubHub store/restaurant, available times and a price.</li>
 <li><strong>Buy:</strong> A buyer finds a swipe and pays from their balance or card.</li>
-<li><strong>Meet &amp; eat:</strong> They meet at the dining hall door, the seller swipes the buyer in, and the buyer confirms. The money moves to the seller&#x27;s balance, and the order shows up in both users&#x27; recent orders.</li>
-</ol></div><div class="contributors_EeeH"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe/graphs/contributors"><img src="https://contrib.rocks/image?repo=cis3296-F26-Applebaum-Nguyen/owlswipe" alt="Project contributors"></a><p>Made with <a href="https://contrib.rocks">contrib.rocks</a>.</p></div></main></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/owlswipe/docs/intro">Documentation</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a class="footer__link-item" href="/owlswipe/tutorial/open-source-usage">Template Contributors</a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2026 Owlswipe. Built with Docusaurus.</div></div></div></footer></div>
+<li><strong>Order &amp; eat:</strong> The seller lists a meal swipe, then the buyer shows up to the store and picks up the order. The money moves to the seller&#x27;s balance, and the order shows up in both users&#x27; recent orders.</li>
+</ol>
+<h2 id="high-level-requirements">High-Level Requirements</h2>
+<ul>
+<li>
+<p><strong>Account verification:</strong> Users must verify an approved school email address with a valid one-time code before creating listings or making purchases. The same account can be used to buy and sell swipes.</p>
+</li>
+<li>
+<p><strong>Creating and managing listings:</strong> Sellers must provide the location, available date and time, number of swipes, and price per swipe. Sellers can edit or remove their available listings, but changes must not alter the details of an existing purchase.</p>
+</li>
+<li>
+<p><strong>Browsing the marketplace:</strong> Buyers can view available listings and filter them by location, time, and price. Expired, canceled, and sold-out listings must no longer appear as available to purchase.</p>
+</li>
+<li>
+<p><strong>Reserving a swipe:</strong> A purchase must reserve a swipe and update the listing&#x27;s available quantity. The system must prevent buyers from purchasing their own listings or purchasing more swipes than a seller has available, including when multiple buyers purchase at the same time.</p>
+</li>
+<li>
+<p><strong>Payment handling:</strong> Buyers can pay using their available balance or a card. A failed payment must not produce a confirmed purchase, and the seller&#x27;s earnings must remain pending until the buyer confirms entry.</p>
+</li>
+<li>
+<p><strong>Completing an order:</strong> Only the buyer attached to an order can confirm that they entered the store/restaurant listed on GrubHub. Confirmation must mark the order as completed for both users and credit the seller&#x27;s available balance exactly once.</p>
+</li>
+<li>
+<p><strong>Recent orders:</strong> Users can view their purchases, sales, and listings with their current status. The history must distinguish available listings, pending orders, completed orders, canceled orders, and reported problems.</p>
+</li>
+<li>
+<p><strong>Balance management:</strong> Users can view available funds, pending earnings, and their transaction history. Adding funds must update the balance only after successful payment, and cash-out requests cannot exceed the user&#x27;s available funds.</p>
+</li>
+<li>
+<p><strong>Cancellations and problems:</strong> Sellers can remove unsold listings, and buyers can report incorrect order details or unsuccessful swipes. Reported orders must remain unresolved without releasing the seller&#x27;s payment, and any cancellation or refund must update both the order status and affected balances.</p>
+</li>
+</ul>
+<h2 id="basic-system-requirements">Basic System Requirements</h2>
+<ul>
+<li>
+<p><strong>Input validation:</strong> Required fields must be checked before submission. Prices must be positive, swipe quantities must be positive whole numbers, and listing availability must include a valid future time.</p>
+</li>
+<li>
+<p><strong>Account access:</strong> Users can manage only their own listings, orders, and balance. Private order and payment information must be restricted to the appropriate account holders.</p>
+</li>
+<li>
+<p><strong>Saved information:</strong> Listings, orders, and balances must remain saved after users refresh the page, sign out, or return later.</p>
+</li>
+<li>
+<p><strong>Usability:</strong> The website must work on phones and computers, with clear navigation between the marketplace, listing form, recent orders, and balance pages.</p>
+</li>
+<li>
+<p><strong>Development payments:</strong> Payments, deposits, and cash-outs must use test mode or simulated transactions during development.</p>
+</li>
+</ul></div><div class="contributors_EeeH"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe/graphs/contributors"><img src="https://contrib.rocks/image?repo=cis3296-F26-Applebaum-Nguyen/owlswipe" alt="Project contributors"></a><p>Made with <a href="https://contrib.rocks">contrib.rocks</a>.</p></div></main></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/owlswipe/docs/intro">Documentation</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a class="footer__link-item" href="/owlswipe/tutorial/open-source-usage">Template Contributors</a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2026 Owlswipe. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
