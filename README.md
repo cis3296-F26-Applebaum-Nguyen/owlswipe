@@ -6,7 +6,7 @@
 
 Most meal plans leave students with swipes they never use, while other students run out before the semester ends. OwlSwipe connects the two. Students with extra swipes list them for sale, and students who need a meal buy one for less than paying at the door. Sellers earn back part of what they spent on their plan, and buyers eat for less.
 
-Prices are set by students. The swipe itself happens in person: Seller uses a meal swipe through DoorDash, then the buyer uses the information provided by the seller to pick up the order.
+Prices are set by students. The swipe itself happens in person: Seller uses a meal swipe through GrubHub, then the buyer uses the information provided by the seller to pick up the order.
 
 **Status:** In planning / early design. This README describes what we plan to build.
 
@@ -29,7 +29,7 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 
 ## How it works
 
-1. **List:** A seller posts their extra swipes with a store/restaurant, available times and a price.
+1. **List:** A seller posts their extra swipes with a GrubHub store/restaurant, available times and a price.
 2. **Buy:** A buyer finds a swipe and pays from their balance or card.
 3. **Order & eat:** The seller lists a meal swipe, then the buyer shows up to the store and picks up the order. The money moves to the seller's balance, and the order shows up in both users' recent orders.
 
@@ -46,7 +46,7 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 * **Payment handling:** Buyers can pay using their available balance or a card. A failed payment must not produce a confirmed purchase, and the seller's earnings must remain pending until the buyer confirms entry.
 
 
-* **Completing an order:** Only the buyer attached to an order can confirm that they entered the store/restaurant. Confirmation must mark the order as completed for both users and credit the seller's available balance exactly once.
+* **Completing an order:** Only the buyer attached to an order can confirm that they entered the store/restaurant listed on GrubHub. Confirmation must mark the order as completed for both users and credit the seller's available balance exactly once.
 
 * **Recent orders:** Users can view their purchases, sales, and listings with their current status. The history must distinguish available listings, pending orders, completed orders, canceled orders, and reported problems.
 
