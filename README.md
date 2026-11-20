@@ -37,7 +37,7 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 
 * **Account verification:** Users must verify an approved school email address with a valid one-time code before creating listings or making purchases. The same account can be used to buy and sell swipes.
 
-* **Creating and managing listings:** Sellers must provide the dining hall, available date and time, number of swipes, and price per swipe. Sellers can edit or remove their available listings, but changes must not alter the details of an existing purchase.
+* **Creating and managing listings:** Sellers must provide the information about the order such as the location, available date and time, number of swipes, and price per swipe. Sellers can edit or remove their available listings, but changes must not alter the details of an existing purchase.
 
 * **Browsing the marketplace:** Buyers can view available listings and filter them by dining hall, time, and price. Expired, canceled, and sold-out listings must no longer appear as available to purchase.
 
