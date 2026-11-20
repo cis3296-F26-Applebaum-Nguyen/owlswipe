@@ -65,3 +65,16 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 * **Usability:** The website must work on phones and computers, with clear navigation between the marketplace, listing form, recent orders, and balance pages.
 
 * **Development payments:** Payments, deposits, and cash-outs must use test mode or simulated transactions during development.
+
+## Tech Stack
+ 
+| Layer | Choice | Why |
+|---|---|---|
+| **Frontend + API** | Next.js (App Router) + TypeScript | One codebase for pages and server logic. Works on phones and computers out of the box. |
+| **Styling** | Tailwind CSS + shadcn/ui | Fast way to build a phone-friendly layout with clear navigation. |
+| **Database** | PostgreSQL via Supabase | Orders and balances need real transactions and constraints. A relational database handles that well. |
+| **Auth** | Supabase Auth, email one-time code | Passwordless login with a code out of the box. Sign-ups are restricted to approved school email domains. |
+| **Access control** | Supabase Row Level Security | Enforces "users only see their own orders and balances" inside the database, not just in the UI. |
+| **Payments** | Stripe (test mode) | Card payments and adding funds. Stripe's webhooks confirm when a payment actually succeeded. |
+| **Cash-outs** | Simulated, or Stripe Connect in test mode | A "cash-out request" record is enough for the first version. |
+| **Expiring listings** | Supabase scheduled jobs | Marks old listings as expired. Queries also filter them out by time. |
