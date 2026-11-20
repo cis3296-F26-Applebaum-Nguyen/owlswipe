@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Owlswipe</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Owlswipe"><meta data-rh="true" name="description" content="Project documentation"><meta data-rh="true" property="og:description" content="Project documentation"><link data-rh="true" rel="icon" href="/owlswipe/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="en"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="x-default"><script data-rh="true">function insertBanner(){var n=document.createElement("div");n.id="__docusaurus-base-url-issue-banner-container";n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/owlswipe/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n',document.body.prepend(n);var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}document.addEventListener("DOMContentLoaded",function(){void 0===window.docusaurus&&insertBanner()})</script><link rel="stylesheet" href="/owlswipe/assets/css/styles.79f7b21c.css">
-<script src="/owlswipe/assets/js/runtime~main.9142b266.js" defer="defer"></script>
-<script src="/owlswipe/assets/js/main.765631a6.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/runtime~main.158e0295.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/main.89d8c481.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -15,7 +15,38 @@
 <h2 id="project-abstract">Project Abstract</h2>
 <p>Explain problem, intended users, and proposed solution.</p>
 <h2 id="high-level-requirements">High-Level Requirements</h2>
-<p>Summarize core capabilities from user perspective.</p>
+<ul>
+<li>
+<p><strong>User accounts:</strong> Users must register with an @temple.edu email address and sign in. Each account can be used to buy and sell meals.</p>
+</li>
+<li>
+<p><strong>Meal requests:</strong> Buyers can create requests that include the restaurant, food items, pickup time, and offered price. Requests with missing required information or an invalid price cannot be submitted.</p>
+</li>
+<li>
+<p><strong>Marketplace:</strong> Sellers can browse available requests and accept an order they want to fulfill. Each request can only be accepted by one seller, even if multiple sellers try to accept it at the same time.</p>
+</li>
+<li>
+<p><strong>Order fulfillment:</strong> Sellers place the requested order through Grubhub using their meal swipes. The assigned seller then uploads the order number and a confirmation screenshot to OwlSwipe.</p>
+</li>
+<li>
+<p><strong>Order status:</strong> Buyers and sellers can view the current status of their orders and track progress from acceptance through pickup.</p>
+</li>
+<li>
+<p><strong>Pickup confirmation and payment:</strong> Only the buyer who created the request can confirm pickup. Payments use Stripe test mode, with payment authorized when the request is posted and captured after the buyer confirms receiving the food.</p>
+</li>
+<li>
+<p><strong>Missing orders:</strong> Buyers can report an order they did not receive and request a refund. An unresolved report must prevent the order from automatically completing or releasing payment.</p>
+</li>
+<li>
+<p><strong>Communication:</strong> Buyers and sellers can exchange messages about their order and receive notifications when its status changes.</p>
+</li>
+<li>
+<p><strong>Ratings:</strong> Buyers and sellers can rate each other after completing an order.</p>
+</li>
+<li>
+<p><strong>Mobile access:</strong> The website must be usable on both phones and computers.</p>
+</li>
+</ul>
 <h2 id="conceptual-design">Conceptual Design</h2>
 <p>Summarize software architecture, platforms, languages, and major integrations.</p>
 <h2 id="background">Background</h2>
