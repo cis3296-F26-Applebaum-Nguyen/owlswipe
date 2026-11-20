@@ -32,3 +32,37 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 1. **List:** A seller posts their extra swipes with a dining hall, available times and a price.
 2. **Buy:** A buyer finds a swipe and pays from their balance or card.
 3. **Meet & eat:** They meet at the dining hall door, the seller swipes the buyer in, and the buyer confirms. The money moves to the seller's balance, and the order shows up in both users' recent orders.
+
+## High-Level Requirements
+
+* **Account verification:** Users must verify an approved school email address with a valid one-time code before creating listings or making purchases. The same account can be used to buy and sell swipes.
+
+* **Creating and managing listings:** Sellers must provide the dining hall, available date and time, number of swipes, and price per swipe. Sellers can edit or remove their available listings, but changes must not alter the details of an existing purchase.
+
+* **Browsing the marketplace:** Buyers can view available listings and filter them by dining hall, time, and price. Expired, canceled, and sold-out listings must no longer appear as available to purchase.
+
+* **Reserving a swipe:** A purchase must reserve a swipe and update the listing's available quantity. The system must prevent buyers from purchasing their own listings or purchasing more swipes than a seller has available, including when multiple buyers purchase at the same time.
+
+* **Payment handling:** Buyers can pay using their available balance or a card. A failed payment must not produce a confirmed purchase, and the seller's earnings must remain pending until the buyer confirms entry.
+
+* **Meeting details:** After a successful purchase, both users can view the dining hall, agreed meeting time, price, and the other participant's identifying display information. These details must remain accessible from the order.
+
+* **Completing an order:** Only the buyer attached to an order can confirm that they entered the dining hall. Confirmation must mark the order as completed for both users and credit the seller's available balance exactly once.
+
+* **Recent orders:** Users can view their purchases, sales, and listings with their current status. The history must distinguish available listings, orders awaiting the meetup, completed orders, canceled orders, and reported problems.
+
+* **Balance management:** Users can view available funds, pending earnings, and their transaction history. Adding funds must update the balance only after successful payment, and cash-out requests cannot exceed the user's available funds.
+
+* **Cancellations and problems:** Sellers can remove unsold listings, and buyers can report a missed meetup or unsuccessful swipe. Reported orders must remain unresolved without releasing the seller's payment, and any cancellation or refund must update both the order status and affected balances.
+
+## Basic System Requirements
+
+* **Input validation:** Required fields must be checked before submission. Prices must be positive, swipe quantities must be positive whole numbers, and listing availability must include a valid future time.
+
+* **Account access:** Users can manage only their own listings, orders, and balance. Private order and payment information must be restricted to the appropriate account holders.
+
+* **Saved information:** Listings, orders, and balances must remain saved after users refresh the page, sign out, or return later.
+
+* **Usability:** The website must work on phones and computers, with clear navigation between the marketplace, listing form, recent orders, and balance pages.
+
+* **Development payments:** Payments, deposits, and cash-outs must use test mode or simulated transactions during development.
