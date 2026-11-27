@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Owlswipe</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Owlswipe"><meta data-rh="true" name="description" content="Project documentation"><meta data-rh="true" property="og:description" content="Project documentation"><link data-rh="true" rel="icon" href="/owlswipe/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="en"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="x-default"><script data-rh="true">function insertBanner(){var n=document.createElement("div");n.id="__docusaurus-base-url-issue-banner-container";n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/owlswipe/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n',document.body.prepend(n);var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}document.addEventListener("DOMContentLoaded",function(){void 0===window.docusaurus&&insertBanner()})</script><link rel="stylesheet" href="/owlswipe/assets/css/styles.79f7b21c.css">
-<script src="/owlswipe/assets/js/runtime~main.6ae6d3a1.js" defer="defer"></script>
-<script src="/owlswipe/assets/js/main.0e776824.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/runtime~main.883f7636.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/main.99b8d97e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -81,6 +81,32 @@
 <p><strong>Development payments:</strong> Payments, deposits, and cash-outs must use test mode or simulated transactions during development.</p>
 </li>
 </ul>
+<h2 id="local-setup">Local setup</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Git</li>
+<li>Node.js 24.15 or newer</li>
+<li>npm</li>
+<li>A Supabase project</li>
+<li>A Stripe account in test mode</li>
+</ul>
+<h3 id="1-clone-the-repository">1. Clone the repository</h3>
+<pre><code class="language-bash">git clone https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe.git
+cd owlswipe
+</code></pre>
+<h3 id="2-install-dependencies">2. Install dependencies</h3>
+<pre><code class="language-bash">npm install
+</code></pre>
+<h3 id="3-configure-environment-variables">3. Configure environment variables</h3>
+<pre><code class="language-bash">cp .env.example .env.local
+</code></pre>
+<p>Open <code>.env.local</code> and replace the example values with credentials from your
+Supabase project and Stripe test-mode account. Keep service-role and Stripe
+secret keys server-only. Never commit <code>.env.local</code>.</p>
+<h3 id="4-start-the-application">4. Start the application</h3>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>Open <a href="http://localhost:3000">http://localhost:3000</a>.</p>
 <h2 id="tech-stack">Tech Stack</h2>
 <table><thead><tr><th>Layer</th><th>Choice</th><th>Why</th></tr></thead><tbody><tr><td><strong>Frontend + API</strong></td><td>Next.js (App Router) + TypeScript</td><td>One codebase for pages and server logic. Works on phones and computers out of the box.</td></tr><tr><td><strong>Styling</strong></td><td>Tailwind CSS + shadcn/ui</td><td>Fast way to build a phone-friendly layout with clear navigation.</td></tr><tr><td><strong>Database</strong></td><td>PostgreSQL via Supabase</td><td>Orders and balances need real transactions and constraints. A relational database handles that well.</td></tr><tr><td><strong>Auth</strong></td><td>Supabase Auth, email one-time code</td><td>Passwordless login with a code out of the box. Sign-ups are restricted to approved school email domains.</td></tr><tr><td><strong>Access control</strong></td><td>Supabase Row Level Security</td><td>Enforces &quot;users only see their own orders and balances&quot; inside the database, not just in the UI.</td></tr><tr><td><strong>Payments</strong></td><td>Stripe (test mode)</td><td>Card payments and adding funds. Stripe&#x27;s webhooks confirm when a payment actually succeeded.</td></tr><tr><td><strong>Cash-outs</strong></td><td>Simulated, or Stripe Connect in test mode</td><td>A &quot;cash-out request&quot; record is enough for the first version.</td></tr><tr><td><strong>Expiring listings</strong></td><td>Supabase scheduled jobs</td><td>Marks old listings as expired. Queries also filter them out by time.</td></tr></tbody></table></div><div class="contributors_EeeH"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe/graphs/contributors"><img src="https://contrib.rocks/image?repo=cis3296-F26-Applebaum-Nguyen/owlswipe" alt="Project contributors"></a><p>Made with <a href="https://contrib.rocks">contrib.rocks</a>.</p></div></main></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/owlswipe/docs/intro">Documentation</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a class="footer__link-item" href="/owlswipe/tutorial/open-source-usage">Template Contributors</a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="Project logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2026 Owlswipe. Built with Docusaurus.</div></div></div></footer></div>
 </body>
