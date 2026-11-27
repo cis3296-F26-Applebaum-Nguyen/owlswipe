@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Owlswipe</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Owlswipe"><meta data-rh="true" name="description" content="Project documentation"><meta data-rh="true" property="og:description" content="Project documentation"><link data-rh="true" rel="icon" href="/owlswipe/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="en"><link data-rh="true" rel="alternate" href="https://cis3296-F26-Applebaum-Nguyen.github.io/owlswipe/" hreflang="x-default"><script data-rh="true">function insertBanner(){var n=document.createElement("div");n.id="__docusaurus-base-url-issue-banner-container";n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/owlswipe/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n',document.body.prepend(n);var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}document.addEventListener("DOMContentLoaded",function(){void 0===window.docusaurus&&insertBanner()})</script><link rel="stylesheet" href="/owlswipe/assets/css/styles.79f7b21c.css">
-<script src="/owlswipe/assets/js/runtime~main.883f7636.js" defer="defer"></script>
-<script src="/owlswipe/assets/js/main.0e776824.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/runtime~main.f3d6f8ad.js" defer="defer"></script>
+<script src="/owlswipe/assets/js/main.d33bcb9f.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -103,7 +103,12 @@ cd owlswipe
 <p>Open <code>.env.local</code> and replace the example values with credentials from your
 Supabase project and Stripe test-mode account. Keep service-role and Stripe
 secret keys server-only. Never commit <code>.env.local</code>.</p>
-<h3 id="4-start-the-application">4. Start the application</h3>
+<h3 id="4-set-up-the-database">4. Set up the database</h3>
+<p>Follow <a href="https://cis3296-f26-applebaum-nguyen.github.io/owlswipe/docs/database-setup">PostgreSQL database setup</a> to apply
+the initial Supabase migration and run the database checks. It adds profiles,
+listings, orders, payment history, and seller ratings with row level security.
+Use the same Supabase project configured in <code>.env.local</code>.</p>
+<h3 id="5-start-the-application">5. Start the application</h3>
 <pre><code class="language-bash">npm run dev
 </code></pre>
 <p>Open <a href="http://localhost:3000">http://localhost:3000</a>.</p>
