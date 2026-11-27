@@ -66,6 +66,47 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 
 * **Development payments:** Payments, deposits, and cash-outs must use test mode or simulated transactions during development.
 
+## Local setup
+
+### Prerequisites
+
+- Git
+- Node.js 24.15 or newer
+- npm
+- A Supabase project
+- A Stripe account in test mode
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/cis3296-F26-Applebaum-Nguyen/owlswipe.git
+cd owlswipe
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+Open `.env.local` and replace the example values with credentials from your
+Supabase project and Stripe test-mode account. Keep service-role and Stripe
+secret keys server-only. Never commit `.env.local`.
+
+### 4. Start the application
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
 ## Tech Stack
  
 | Layer | Choice | Why |
