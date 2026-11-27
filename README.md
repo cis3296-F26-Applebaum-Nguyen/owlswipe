@@ -71,7 +71,7 @@ OwlSwipe is for verified students only. Every account is tied to a school email 
 ### Prerequisites
 
 - Git
-- Node.js 20.9 or newer
+- Node.js 24.15 or newer
 - npm
 - A Supabase project
 - A Stripe account in test mode
