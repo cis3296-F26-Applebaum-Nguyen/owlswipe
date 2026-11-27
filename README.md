@@ -99,7 +99,14 @@ Open `.env.local` and replace the example values with credentials from your
 Supabase project and Stripe test-mode account. Keep service-role and Stripe
 secret keys server-only. Never commit `.env.local`.
 
-### 4. Start the application
+### 4. Set up the database
+
+Follow [PostgreSQL database setup](https://cis3296-f26-applebaum-nguyen.github.io/owlswipe/docs/database-setup) to apply
+the initial Supabase migration and run the database checks. It adds profiles,
+listings, orders, payment history, and seller ratings with row level security.
+Use the same Supabase project configured in `.env.local`.
+
+### 5. Start the application
 
 ```bash
 npm run dev
