@@ -1,4 +1,5 @@
-import { CAMPUS_TIME_ZONE, type MarketplaceListing } from "@/lib/marketplace";
+import { CAMPUS_TIME_ZONE, type MarketplaceListing, swipeValueAt } from "@/lib/marketplace";
+import type { OrderRequest } from "@/lib/orders";
 import type { WalletSnapshot } from "@/src/server/modules/wallet";
 
 // TODO: Replace with Supabase queries once the listings and wallet tables exist.
@@ -96,4 +97,50 @@ export async function getMarketplaceStats(): Promise<MarketplaceStats> {
     lowestPerSwipeInCents: perSwipe.length ? Math.round(Math.min(...perSwipe)) : null,
     averagePerSwipeInCents: swipes ? Math.round(totalPrice / swipes) : null,
   };
+}
+
+// [restaurant, swipes, total price in cents, day offset, pickup hour, buyer first name, order, status]
+type SampleRequest = [string, number, number, number, number, string, string, OrderRequest["status"]];
+
+function placeholderRequests(samples: SampleRequest[], prefix: string, now = new Date()): OrderRequest[] {
+  return samples.map(([restaurantSlug, swipeCount, totalPriceInCents, day, hour, buyerFirstName, orderDetails, status], index) => {
+    const pickupAt = campusTime(now, day, hour);
+    return {
+      id: `${prefix}-${index + 1}`,
+      restaurantSlug,
+      swipeCount,
+      totalPriceInCents,
+      pickupAt: pickupAt.toISOString(),
+      orderDetails,
+      budgetInCents: swipeCount * swipeValueAt(pickupAt),
+      buyerFirstName,
+      status,
+    };
+  });
+}
+
+/** Orders on the current user's listings that they still need to accept or decline. */
+export async function getIncomingOrderRequests(): Promise<OrderRequest[]> {
+  return placeholderRequests(
+    [
+      ["chick-fil-a", 2, 1500, 1, 12.25, "Jordan", "2x Spicy Chicken Sandwich Meal, medium waffle fries, large lemonade with both", "awaiting_seller"],
+      ["wingstop", 1, 900, 1, 13.5, "Priya", "6 pc Classic Wings combo, Lemon Pepper, ranch, regular fries", "awaiting_seller"],
+      ["panera-bread", 1, 800, 1, 8.75, "Sam", "Bacon, Egg & Cheese on Brioche, small coffee", "awaiting_seller"],
+    ],
+    "incoming",
+  );
+}
+
+/** The current user's own purchases and where each one stands. */
+export async function getMyOrderRequests(): Promise<OrderRequest[]> {
+  const requests = placeholderRequests(
+    [
+      ["panda-express", 2, 1400, 1, 12.5, "You", "2x Plate: Orange Chicken + Broccoli Beef, Chow Mein", "awaiting_seller"],
+      ["burgerfi", 1, 650, 1, 17, "You", "Junior cheeseburger combo, fries, Coke", "accepted"],
+      ["twisted-taco", 2, 1100, 1, 18, "You", "2x Steak Burrito with queso and guac, chips and salsa", "declined"],
+    ],
+    "mine",
+  );
+  requests[2] = { ...requests[2], declineReason: "over_budget", declineNote: "Guac and queso push it past $21.40. Drop one?" };
+  return requests;
 }

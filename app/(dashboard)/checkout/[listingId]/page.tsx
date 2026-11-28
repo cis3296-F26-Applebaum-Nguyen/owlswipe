@@ -1,4 +1,4 @@
-import { ArrowLeft, Clock, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -6,7 +6,13 @@ import { notFound } from "next/navigation";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
 import { swipeStyles } from "@/components/marketplace/listing-card";
 import { RestaurantLogo } from "@/components/marketplace/restaurant-logo";
-import { findPickupSlot, formatPickupSlot, formatPickupWindow } from "@/lib/marketplace";
+import {
+  findPickupSlot,
+  formatPickupSlot,
+  formatPickupWindow,
+  orderBudget,
+  parseOrderDetails,
+} from "@/lib/marketplace";
 import { getListing, getWalletSnapshot } from "@/lib/placeholder-data";
 import { getRestaurant } from "@/lib/restaurants";
 import { cn, formatCents } from "@/lib/utils";
@@ -23,9 +29,11 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
   const restaurant = listing && getRestaurant(listing.restaurantSlug);
   if (!listing || !restaurant) notFound();
 
-  const pickup = (await searchParams).pickup;
+  const query = await searchParams;
+  const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
   const now = new Date();
-  const slot = findPickupSlot(listing, Array.isArray(pickup) ? pickup[0] : pickup, now);
+  const slot = findPickupSlot(listing, first(query.pickup), now);
+  const order = parseOrderDetails(first(query.order));
   const wallet = await getWalletSnapshot();
   const style = swipeStyles[listing.swipeCount === 2 ? 2 : 1];
   const backHref = `/marketplace/${restaurant.slug}` as const;
@@ -39,10 +47,14 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
 
       <h1 className="text-3xl font-bold tracking-tight">Checkout</h1>
 
-      {!slot ? (
+      {!slot || !order ? (
         <div className="rounded-xl border border-dashed border-white/15 p-8 text-center">
-          <p className="font-medium">That pickup time isn&apos;t available anymore.</p>
-          <p className="mt-1 text-sm text-slate-400">Slots need to be at least 30 minutes away.</p>
+          <p className="font-medium">
+            {!slot ? "That pickup time isn't available anymore." : "Tell the seller what you want to order."}
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            {!slot ? "Slots need to be at least 30 minutes away." : "Click Buy again and fill in your order."}
+          </p>
           <Link className="mt-3 inline-block text-sm text-blue-300 hover:text-blue-200" href={backHref}>
             Choose another time
           </Link>
@@ -77,6 +89,19 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
                   </Link>
                 </dd>
               </div>
+              <div className="space-y-1">
+                <dt className="flex justify-between gap-4 text-slate-400">
+                  Your order
+                  <Link className="text-xs text-blue-300 hover:text-blue-200" href={backHref}>
+                    Change
+                  </Link>
+                </dt>
+                <dd className="whitespace-pre-wrap break-words rounded-md bg-black/20 p-2.5 text-slate-100">{order}</dd>
+                <dd className="text-xs text-slate-400">
+                  Budget: up to {formatCents(orderBudget(listing, slot).totalInCents)}
+                  {orderBudget(listing, slot).breakfast ? " (breakfast swipe value)" : ""}
+                </dd>
+              </div>
               <div className="flex justify-between gap-4">
                 <dt className="text-slate-400">Seller window</dt>
                 <dd className="text-right text-slate-300">{formatPickupWindow(listing, now)}</dd>
@@ -92,12 +117,11 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
                 <ShieldCheck aria-hidden="true" className="size-4 text-emerald-300" />
                 Payment held until pickup
               </p>
-              <p>You&apos;re only charged once you confirm you picked up your food.</p>
-              <p className="flex gap-1.5 pt-1">
-                <Clock aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" />
-                At your pickup time, the seller places the GrubHub order and sends you the order number and name
-                to give at the counter.
-              </p>
+              <ol className="list-decimal space-y-1 pl-4">
+                <li>The seller checks your order and accepts it. If it doesn&apos;t fit the budget, they decline and the hold is released.</li>
+                <li>At your pickup time, they place the GrubHub order and send you the order number and name.</li>
+                <li>You&apos;re charged only after you confirm pickup.</li>
+              </ol>
             </div>
           </aside>
 

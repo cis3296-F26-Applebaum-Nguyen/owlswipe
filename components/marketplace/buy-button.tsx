@@ -9,14 +9,20 @@ import {
   formatPickupSlot,
   formatSlotStart,
   type MarketplaceListing,
+  ORDER_DETAILS_MAX_LENGTH,
+  orderBudget,
   PICKUP_LEAD_MINUTES,
   PICKUP_SLOT_MINUTES,
   pickupSlots,
+  SWIPE_VALUE_IN_CENTS,
   toSlotParam,
 } from "@/lib/marketplace";
-import { cn } from "@/lib/utils";
+import { cn, formatCents } from "@/lib/utils";
 
-/** Buy opens a dialog where the buyer picks a 15-minute pickup slot, then goes to checkout. */
+/**
+ * Buy opens a dialog where the buyer picks a 15-minute pickup slot and types the exact
+ * items they want, then goes to checkout.
+ */
 export function BuyButton({ listing }: { listing: MarketplaceListing }) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -24,6 +30,8 @@ export function BuyButton({ listing }: { listing: MarketplaceListing }) {
   const [slots, setSlots] = useState<Date[]>([]);
   const [now, setNow] = useState(() => new Date());
   const [selected, setSelected] = useState<string>();
+  // Kept between opens so the buyer doesn't lose what they typed.
+  const [order, setOrder] = useState("");
 
   function open() {
     const openedAt = new Date();
@@ -35,6 +43,18 @@ export function BuyButton({ listing }: { listing: MarketplaceListing }) {
 
   const close = () => dialogRef.current?.close();
   const selectedSlot = slots.find((slot) => toSlotParam(slot) === selected);
+  // Before a time is picked, show the regular swipe value; breakfast slots lower it once chosen.
+  const budget = selectedSlot
+    ? orderBudget(listing, selectedSlot)
+    : { totalInCents: listing.swipeCount * SWIPE_VALUE_IN_CENTS, breakfast: false };
+  const swipes = `${listing.swipeCount} ${listing.swipeCount === 1 ? "swipe" : "swipes"}`;
+  const canContinue = selectedSlot && order.trim();
+
+  function goToCheckout() {
+    if (!canContinue) return;
+    const params = new URLSearchParams({ pickup: toSlotParam(selectedSlot), order: order.trim() });
+    router.push(`/checkout/${listing.id}?${params}`);
+  }
 
   return (
     <>
@@ -44,7 +64,7 @@ export function BuyButton({ listing }: { listing: MarketplaceListing }) {
 
       <dialog
         aria-labelledby={`pickup-title-${listing.id}`}
-        className="m-auto w-[min(30rem,calc(100%-2rem))] rounded-xl bg-slate-900 p-0 text-slate-100 shadow-2xl ring-1 ring-white/10 backdrop:bg-black/70"
+        className="m-auto max-h-[calc(100dvh-2rem)] w-[min(30rem,calc(100%-2rem))] overflow-y-auto rounded-xl bg-slate-900 p-0 text-slate-100 shadow-2xl ring-1 ring-white/10 backdrop:bg-black/70"
         // Clicking the backdrop (the dialog element itself) closes it.
         onClick={(event) => event.target === event.currentTarget && close()}
         ref={dialogRef}
@@ -109,6 +129,33 @@ export function BuyButton({ listing }: { listing: MarketplaceListing }) {
             </fieldset>
           )}
 
+          {slots.length > 0 ? (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium" htmlFor={`order-${listing.id}`}>
+                What do you want?
+              </label>
+              <textarea
+                className="block min-h-24 w-full resize-y rounded-lg bg-slate-950/60 p-3 text-sm text-white ring-1 ring-white/15 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id={`order-${listing.id}`}
+                maxLength={ORDER_DETAILS_MAX_LENGTH}
+                onChange={(event) => setOrder(event.target.value)}
+                placeholder="Use exact item names from the menu, e.g. Spicy Chicken Sandwich Meal, medium waffle fries, lemonade, no pickles"
+                value={order}
+              />
+              <p className="flex justify-between gap-3 text-xs text-slate-400">
+                <span>
+                  Keep it under <span className="font-semibold text-white">{formatCents(budget.totalInCents)}</span> (
+                  {swipes}
+                  {budget.breakfast ? " at breakfast prices" : ""}). The seller checks the price and can decline if it
+                  doesn&apos;t fit.
+                </span>
+                <span className="shrink-0 tabular-nums">
+                  {order.length}/{ORDER_DETAILS_MAX_LENGTH}
+                </span>
+              </p>
+            </div>
+          ) : null}
+
           <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
             <p className="text-sm text-slate-400">
               {selectedSlot ? (
@@ -121,8 +168,8 @@ export function BuyButton({ listing }: { listing: MarketplaceListing }) {
             </p>
             <Button
               className="bg-blue-600 text-white hover:bg-blue-500"
-              disabled={!selectedSlot}
-              onClick={() => router.push(`/checkout/${listing.id}?pickup=${selected}`)}
+              disabled={!canContinue}
+              onClick={goToCheckout}
             >
               Continue to checkout
             </Button>

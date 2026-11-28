@@ -3,6 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   filterListings,
   findPickupSlot,
+  orderBudget,
+  parseOrderDetails,
+  swipeValueAt,
   formatPickupSlot,
   formatPickupWindow,
   pickupSlots,
@@ -140,5 +143,28 @@ describe("formatPickupSlot", () => {
   it("shows the day and the 15-minute range", () => {
     const text = formatPickupSlot(new Date("2026-11-28T13:15:00Z"), new Date("2026-11-27T17:00:00Z"));
     expect(text.replace(/\s/g, " ")).toBe("Tomorrow, 8:15 – 8:30 AM");
+  });
+});
+
+describe("swipeValueAt", () => {
+  it("is the breakfast value before 11 AM campus time", () => {
+    expect(swipeValueAt(new Date("2026-11-27T15:45:00Z"))).toBe(775); // 10:45 AM
+    expect(swipeValueAt(new Date("2026-11-27T16:00:00Z"))).toBe(1070); // 11:00 AM
+  });
+});
+
+describe("orderBudget", () => {
+  it("multiplies the swipe value by the bundle size", () => {
+    expect(orderBudget(breakfast, new Date("2026-11-28T13:30:00Z"))).toEqual({ totalInCents: 1550, breakfast: true });
+    expect(orderBudget(dinner, new Date("2026-11-27T22:30:00Z"))).toEqual({ totalInCents: 2140, breakfast: false });
+  });
+});
+
+describe("parseOrderDetails", () => {
+  it("trims the text and rejects empty or too-long orders", () => {
+    expect(parseOrderDetails("  8 ct Nuggets Meal  ")).toBe("8 ct Nuggets Meal");
+    expect(parseOrderDetails("   ")).toBeUndefined();
+    expect(parseOrderDetails(undefined)).toBeUndefined();
+    expect(parseOrderDetails("x".repeat(301))).toBeUndefined();
   });
 });

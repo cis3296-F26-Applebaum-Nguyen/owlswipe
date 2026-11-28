@@ -1,7 +1,14 @@
 export const CAMPUS_TIME_ZONE = "America/New_York";
 
-/** One meal swipe covers a single item or combo up to this amount. */
-export const SWIPE_VALUE_IN_CENTS = 1050;
+// A retail swipe is a credit toward any à la carte food at the restaurant, worth
+// less at breakfast. Source: temple.mydininghub.com/MealPlans/MealPlans101 (Fall 2026).
+// Re-check each semester.
+/** Swipe value at lunch, dinner and 4th meal (11 AM onward). */
+export const SWIPE_VALUE_IN_CENTS = 1070;
+/** Swipe value at breakfast (open until 10:59 AM). */
+export const BREAKFAST_SWIPE_VALUE_IN_CENTS = 775;
+/** Breakfast ends at 11 AM campus time, in minutes after midnight. */
+export const BREAKFAST_END = 11 * 60;
 
 /** Temple allows at most two meal swipes per retail transaction. */
 export const MAX_SWIPES_PER_LISTING = 2;
@@ -203,4 +210,26 @@ export function formatPickupSlot(slot: Date, now = new Date()) {
 /** "1:15 PM", for slot buttons. */
 export function formatSlotStart(slot: Date) {
   return timeFormatter.format(slot);
+}
+
+/** What one swipe is worth when the seller places the order at this pickup slot. */
+export function swipeValueAt(slot: Date) {
+  return campusMinuteOfDay(slot) < BREAKFAST_END ? BREAKFAST_SWIPE_VALUE_IN_CENTS : SWIPE_VALUE_IN_CENTS;
+}
+
+/** The most the buyer's order can cost: every swipe in the bundle at the slot's swipe value. */
+export function orderBudget(listing: MarketplaceListing, slot: Date) {
+  return {
+    totalInCents: listing.swipeCount * swipeValueAt(slot),
+    breakfast: swipeValueAt(slot) === BREAKFAST_SWIPE_VALUE_IN_CENTS,
+  };
+}
+
+/** The buyer's order is free text: the exact items they want the seller to order. */
+export const ORDER_DETAILS_MAX_LENGTH = 300;
+
+/** Trimmed order text from the checkout URL, or undefined if it's empty or too long. */
+export function parseOrderDetails(value: string | undefined) {
+  const text = value?.trim();
+  return text && text.length <= ORDER_DETAILS_MAX_LENGTH ? text : undefined;
 }

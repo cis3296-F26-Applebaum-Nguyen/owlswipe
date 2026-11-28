@@ -9,6 +9,7 @@ import { ListingFilters } from "@/components/marketplace/listing-filters";
 import { RestaurantLogo } from "@/components/marketplace/restaurant-logo";
 import {
   filterListings,
+  BREAKFAST_SWIPE_VALUE_IN_CENTS,
   MAX_SWIPES_PER_LISTING,
   parseListingFilters,
   SWIPE_VALUE_IN_CENTS,
@@ -51,8 +52,9 @@ export default async function RestaurantListingsPage({ params, searchParams }: P
       </div>
 
       <p className="text-sm text-slate-400">
-        Each meal swipe covers one item or combo up to {formatCents(SWIPE_VALUE_IN_CENTS)}. Up to{" "}
-        {MAX_SWIPES_PER_LISTING} swipes can be stacked in one order, and listings are sold as a bundle.
+        Each meal swipe is worth {formatCents(SWIPE_VALUE_IN_CENTS)} toward any food here (
+        {formatCents(BREAKFAST_SWIPE_VALUE_IN_CENTS)} before 11 AM). Up to {MAX_SWIPES_PER_LISTING} swipes can be
+        stacked in one order, and listings are sold as a bundle.
       </p>
 
       <Suspense>
