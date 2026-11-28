@@ -8,18 +8,19 @@ describe("HomeDashboard", () => {
     render(
       <HomeDashboard
         stats={{
-          swipesAvailable: 37,
           activeListings: 12,
-          lowestPriceInCents: 500,
-          averagePriceInCents: null,
+          swipesForSale: 37,
+          lowestPerSwipeInCents: 500,
+          averagePerSwipeInCents: null,
         }}
         wallet={{ availableInCents: 2450, pendingInCents: 800 }}
       />,
     );
 
-    expect(screen.getByText("Swipes available").nextSibling).toHaveTextContent("37");
-    expect(screen.getByText("Lowest price").nextSibling).toHaveTextContent("$5.00");
-    expect(screen.getByText("Average price").nextSibling).toHaveTextContent("—");
+    expect(screen.getByText("Listings available").nextSibling).toHaveTextContent("12");
+    expect(screen.getByText("Swipes for sale").nextSibling).toHaveTextContent("37");
+    expect(screen.getByText("Lowest per swipe").nextSibling).toHaveTextContent("$5.00");
+    expect(screen.getByText("Average per swipe").nextSibling).toHaveTextContent("—");
     expect(screen.getByText("$24.50")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /browse marketplace/i })).toHaveAttribute(
       "href",
