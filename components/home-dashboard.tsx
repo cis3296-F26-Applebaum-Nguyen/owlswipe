@@ -16,10 +16,10 @@ const priceOrDash = (cents: number | null) => (cents === null ? "—" : formatCe
 
 export function HomeDashboard({ stats, wallet }: HomeDashboardProps) {
   const statCards = [
-    { label: "Swipes available", value: String(stats.swipesAvailable), icon: Utensils },
-    { label: "Active listings", value: String(stats.activeListings), icon: TicketCheck },
-    { label: "Lowest price", value: priceOrDash(stats.lowestPriceInCents), icon: TrendingDown },
-    { label: "Average price", value: priceOrDash(stats.averagePriceInCents), icon: Tag },
+    { label: "Listings available", value: String(stats.activeListings), icon: TicketCheck },
+    { label: "Swipes for sale", value: String(stats.swipesForSale), icon: Utensils },
+    { label: "Lowest per swipe", value: priceOrDash(stats.lowestPerSwipeInCents), icon: TrendingDown },
+    { label: "Average per swipe", value: priceOrDash(stats.averagePerSwipeInCents), icon: Tag },
   ];
 
   return (
@@ -28,8 +28,8 @@ export function HomeDashboard({ stats, wallet }: HomeDashboardProps) {
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Welcome back</h1>
           <p className="max-w-xl text-slate-400">
-            {stats.swipesAvailable} meal swipes are up for grabs right now. Grab a cheaper meal or
-            sell the swipes you won&apos;t use.
+            {stats.activeListings} {stats.activeListings === 1 ? "listing is" : "listings are"} up right now.
+            Grab a cheaper meal or sell the swipes you won&apos;t use.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">

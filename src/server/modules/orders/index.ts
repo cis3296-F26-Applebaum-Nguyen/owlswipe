@@ -1,5 +1,8 @@
 export type OrderStatus =
   | "payment_pending"
+  // The seller still has to accept the buyer's order (see lib/orders.ts).
+  | "awaiting_seller"
+  | "declined"
   | "confirmed"
   | "completed"
   | "cancelled"
